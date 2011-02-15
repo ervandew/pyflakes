@@ -513,15 +513,16 @@ class Checker(object):
     def FUNCTIONDEF(self, node):
         # the decorators attribute is called decorator_list as of Python 2.6
         if hasattr(node, 'decorators'):
-            for deco in node.decorators:
-                self.handleNode(deco, node)
+            decorators = node.decorators
         else:
-            for deco in node.decorator_list:
-                self.handleNode(deco, node)
+            decorators = node.decorator_list
+
+        for deco in node.decorator_list:
+            self.handleNode(deco, node)
 
         # Check for property decorator
         func_def = FunctionDefinition(node.name, node)
-        for decorator in node.decorator_list:
+        for decorator in decorators:
             if getattr(decorator, 'attr', None) in ('setter', 'deleter'):
                 func_def._property_decorator = True
 
