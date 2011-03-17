@@ -517,7 +517,7 @@ class Checker(object):
         else:
             decorators = node.decorator_list
 
-        for deco in node.decorator_list:
+        for deco in decorators:
             self.handleNode(deco, node)
 
         # Check for property decorator
